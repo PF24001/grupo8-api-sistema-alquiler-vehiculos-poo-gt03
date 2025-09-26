@@ -123,4 +123,3 @@ El sistema está diseñado con **Spring Boot** y sigue la arquitectura en capas,
    ```
 
 
-
