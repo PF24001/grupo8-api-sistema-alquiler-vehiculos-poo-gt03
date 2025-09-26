@@ -1,4 +1,4 @@
-![alt text](image-1.png)
+
 - Universidad de El Salvador
 - Facultad Multidiciplinaria de Occidente
 - Programación Orientada a Objetos - GT03
