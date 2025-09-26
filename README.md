@@ -1,3 +1,9 @@
+![alt text](image-1.png)
+- Universidad de El Salvador
+- Facultad Multidiciplinaria de Occidente
+- Programación Orientada a Objetos - GT03
+- Proyecto de ciclo - Grupo #8
+
 # 🚗 API de Sistema de Alquiler de Vehículos
 
 ## 📌 Descripción
@@ -59,7 +65,7 @@ El sistema está diseñado con **Spring Boot** y sigue la arquitectura en capas,
 
 
 
-## ⚙️ Tecnologías Utilizadas
+## ⚙️ Tecnologías a utilizar en todo el proyecto
 - **Java 21**
 - **Spring Boot 3**
 - **Maven** (gestión de dependencias)
@@ -69,58 +75,103 @@ El sistema está diseñado con **Spring Boot** y sigue la arquitectura en capas,
 - **JUnit 5** (pruebas unitarias)
 - **Postman** (pruebas de endpoints)
 
-
-
 ## 📂 Estructura del Proyecto
 
 ```
-
-│   .gitignore             - Archivos/Carpetas que no se deben subir a Git
-│   pom.xml                - Configuración de Maven y dependencias
-│   README.md              - Documentación del proyecto
+root:
+│   .gitignore
+│   pom.xml
+│   README.md
+│   
+├───Diagramas
+│   │   DiagramaDeClases.wsd
+│   │   DiagramaDeUsos.swd
+│   │   DiagramaER.dbml
+│   │   
+│   └───png
+│           DiagramaDeClases.png
+│           DiagramaDeUsos.png
+│           DiagramaER.png
 │
-├───src/                                - Código fuente y recursos
-│   ├───main/                           - Código principal de la aplicación
-│   │   ├───java/com/proyecto/apirenta/
-│   │   │   ├───controller              - Controladores REST (manejan peticiones HTTP)
-│   │   │   ├───dto                     - Objetos de transferencia de datos (request/response)
-│   │   │   ├───model                   - Entidades JPA (tablas de la BD)
-│   │   │   ├───repository              - Interfaces JPA (acceso a datos)
-│   │   │   └───service                 - Lógica de negocio (reglas del sistema)
-│   │   └───resources/       
-│   │           application.properties  - Configuración de la app (BD, puerto, etc.)
+├───src
+│   ├───main
+│   │   ├───java
+│   │   │   └───com
+│   │   │       └───proyecto
+│   │   │           └───apirenta
+│   │   │               ├───controller
+│   │   │               ├───dto
+│   │   │               ├───model
+│   │   │               ├───repository
+│   │   │               └───service
+│   │   └───resources
+│   │           application.properties
 │   │
-│   └───test/                           - Pruebas unitarias y de integración
-│       ├───java/com/proyecto/apirenta/ - Clases de prueba con JUnit
-│       └───resources/                  - Configuración y datos para pruebas
-│
-└───target/                             - Archivos generados automáticamente (build)
-    ├───generated-sources/  
-    │   └───annotations                 - Código generado por anotaciones (ej. Lombok)
-    └───generated-test-sources/
-        └───test-annotations            - Código generado para pruebas
-
+│   └───test
+│       ├───java
+│       │   └───com
+│       │       └───proyecto
+│       │           └───apirenta
+│       └───resources
+└───target
+    ├───classes
+    │   │   application.properties
+    │   │
+    │   └───com
+    │       └───proyecto
+    │           └───apirenta
+    │               ├───controller
+    │               ├───dto
+    │               ├───model
+    │               ├───repository
+    │               └───service
+    ├───generated-sources
+    │   └───annotations
+    ├───generated-test-sources
+    │   └───test-annotations
+    └───test-classes
+        └───com
+            └───proyecto
+                └───apirenta
 ```
 
 
+## Extensiones necesarias en VS Code
 
-## 🚀 Instalación y Ejecución
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/<tu-usuario>/vehiculos-rental-api.git
-   ```
-2. Entrar al directorio:
-   ```bash
-   cd vehiculos-renta-api
-   ```
-3. Compilar y ejecutar con Maven:
-   ```bash
-   mvn spring-boot:run
-   ```
-4. La API estará disponible en:
-   ```
-   http://localhost:8080
-   ```
+Para poder compilar y trabajar correctamente con el proyecto, asegúrate de instalar las siguientes extensiones:
+
+- [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack) → Para compilar y ejecutar proyectos Java. 
+- [DBML Previewer](https://marketplace.visualstudio.com/items?itemName=rizkykurniawan.dbml-previewer) → Para visualizar diagramas DBML.   
+- [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml) → Para visualizar diagramas UML.  
+
+## Visualización de diagramas de clases y usos (.swd, .wsd)
+
+Dentro del proyecto encontrarás los siguientes diagramas:
+
+- `Diagramas\DiagramaDeClases.wsd`  
+- `Diagramas\DiagramaDeUsos.swd`  
+
+Para poder visualizar la **vista previa** de estos diagramas:  
+
+1. Abre el archivo correspondiente (`.wsd` o `.swd`) en VS Code.  
+2. Colócate sobre cualquier línea del código del diagrama.  
+3. Presiona la combinación de teclas:  "Alt + D"
+
+Esto abrirá la vista previa generada del diagrama.
+
+## Visualización de diagrama ER (.dbml)
+
+El proyecto también incluye el siguiente diagrama ER:  
+
+- `Diagramas\DiagramaER.dbml`  
+
+Para **compilar y visualizar** este diagrama:  
+
+1. Abre el archivo `.dbml` en VS Code.  
+2. Presiona la combinación de teclas:  "Ctrl + Shift + D"
+
+Esto abrirá la vista previa del diagrama ER.  
+
 
 ## 📅 Entregas
 - **Entrega 1:** Diagramas UML + ER, Casos de uso, Repo base ✅
