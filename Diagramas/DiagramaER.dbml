@@ -1,23 +1,23 @@
 // Entidades
 Table Agencia {
-  id int [pk, increment]
+  id int [pk, increment] // PK
   nombre varchar
   direccion varchar
   telefono varchar
 }
 
 Table Vehiculo {
-  id int [pk, increment]
+  id int [pk, increment] // PK
   placa varchar
   marca varchar
   modelo varchar
   estado varchar
   precio_por_dia decimal
-  agencia_id int [ref: > Agencia.id]
+  agencia_id int [ref: > Agencia.id] // FK → Agencia.id
 }
 
 Table Cliente {
-  id int [pk, increment]
+  id int [pk, increment] // PK
   nombre varchar
   email varchar
   telefono varchar
@@ -25,24 +25,24 @@ Table Cliente {
 }
 
 Table Reserva {
-  id int [pk, increment]
+  id int [pk, increment] // PK
   fecha_inicio date
   fecha_fin date
   estado varchar
-  cliente_id int [ref: > Cliente.id]
-  vehiculo_id int [ref: > Vehiculo.id]
+  cliente_id int [ref: > Cliente.id]   // FK → Cliente.id
+  vehiculo_id int [ref: > Vehiculo.id] // FK → Vehiculo.id
 }
 
 Table Pago {
-  id int [pk, increment]
+  id int [pk, increment] // PK
   fecha_pago date
   monto decimal
   metodo varchar
-  reserva_id int [ref: > Reserva.id, unique]
+  reserva_id int [ref: > Reserva.id, unique] // FK único → Reserva.id
 }
 
 // Relaciones
-// Una Agencia tiene muchos Vehículos
-// Un Cliente puede tener varias Reservas
-// Un Vehículo puede tener varias Reservas
-// Una Reserva tiene un único Pago
+// Agencia (1) ----< Vehiculo (N)
+// Cliente (1) ----< Reserva (N)
+// Vehiculo (1) ----< Reserva (N)
+// Reserva (1) ---- (1) Pago
