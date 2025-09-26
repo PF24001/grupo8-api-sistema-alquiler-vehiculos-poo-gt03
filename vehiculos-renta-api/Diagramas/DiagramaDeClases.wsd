@@ -1,0 +1,56 @@
+@startuml
+
+Class cliente {
+    + idCliente : int
+    + nombre : String
+    + edad : int
+    + email : String
+    + telefono : int 
+    + direccion : String
+    + registrar() 
+    + iniciarSesion()
+
+}
+
+class Vehiculo {
+  + idVehiculo : int
+  + marca : String
+  + modelo : String
+  + anio : int 
+  + color : String 
+  + estado : String
+  + reservar()
+  + devolver()
+}
+
+class Agencia {
+  + idAgencia: int
+  + nombre: String
+  + direccion: String
+  + telefono: String
+  + sitioWeb: String
+}
+
+Class Reserva {
+    + idReserva : int
+    + fechaInicio : Date
+    + fechaFin : Date
+    + estado : String 
+    + crearReserva()
+    + cancelarReserva()
+}
+
+class Pago {
+  + idPago: int
+  + monto: float
+  + metodoPago : String
+  + estadoPago : String
+  + realizarPago(): void
+}
+
+cliente ---> Reserva : hace 
+Reserva ---> Vehiculo : reserva
+Reserva --->  Pago : genera
+Agencia ---> Vehiculo : tiene
+
+@enduml

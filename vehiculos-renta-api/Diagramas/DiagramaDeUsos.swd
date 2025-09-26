@@ -1,0 +1,47 @@
+@startuml
+left to right direction
+
+' Actores
+actor Cliente #LightBlue
+actor Agencia #LightGreen
+actor "Sistema de Pago" as SistemaPago #FFFACD
+
+' Paquete de casos de uso del Cliente
+package "Acciones del Cliente" {
+  (Registrar / Iniciar sesión) #LightCyan
+  (Buscar vehículos disponibles) #LightCyan
+  (Realizar reserva) #LightPink
+  (Cancelar reserva) #LightPink
+  (Entregar vehículo) #LightPink
+  (Devolver vehículo) #LightPink
+}
+
+' Paquete de casos de uso de la Agencia
+package "Acciones de la Agencia" {
+  (Agregar / Actualizar vehículos) #LightGreen
+  (Gestionar reservas) #LightGreen
+  (Ver historial de clientes) #LightGreen
+}
+
+' Relaciones Cliente
+Cliente --> (Registrar / Iniciar sesión)
+Cliente --> (Buscar vehículos disponibles)
+Cliente --> (Realizar reserva)
+Cliente --> (Cancelar reserva)
+Cliente --> (Entregar vehículo)
+Cliente --> (Devolver vehículo)
+
+' Relaciones Agencia
+Agencia --> (Agregar / Actualizar vehículos)
+Agencia --> (Gestionar reservas)
+Agencia --> (Ver historial de clientes)
+
+' Relaciones entre casos de uso
+(Realizar reserva) --> (Pagar reserva) #Red
+(Pagar reserva) --> SistemaPago #Orange
+(Gestionar reservas) --> (Realizar reserva) #Green
+(Gestionar reservas) --> (Cancelar reserva) #Green
+(Gestionar reservas) --> (Entregar vehículo) #Green
+(Gestionar reservas) --> (Devolver vehículo) #Green
+
+@enduml
