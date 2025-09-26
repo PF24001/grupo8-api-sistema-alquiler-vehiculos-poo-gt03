@@ -123,8 +123,6 @@ El sistema está diseñado con **Spring Boot** y sigue la arquitectura en capas,
    ```
 
 
-## 📅 Entregas
-- **Entrega 1:** Diagramas UML + ER, Casos de uso, Repo base.  
-- **Entrega 2:** Implementación parcial de la API (CRUD de 2 entidades + Postman).  
+
   
 
