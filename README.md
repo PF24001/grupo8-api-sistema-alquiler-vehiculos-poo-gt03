@@ -1,3 +1,4 @@
+<img width="1600" height="389" alt="image" src="https://github.com/user-attachments/assets/159d471f-063b-41f6-9f5c-4c65095fd823" />
 
 - Universidad de El Salvador
 - Facultad Multidiciplinaria de Occidente
