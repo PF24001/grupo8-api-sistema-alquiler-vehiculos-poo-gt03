@@ -17,11 +17,11 @@ El sistema está diseñado con **Spring Boot** y sigue la arquitectura en capas,
 
 
 ## 👥 Integrantes Equipo #8 
-- **[Nombre 1]**
-- **[Nombre 2]**
-- **[Nombre 3]**
-- **[Nombre 4]**
-- **[Nombre 4]**
+- **(Lider) Franklin Esteban Perez Fuentes - Carnet: PF24001 - Usuario de GitHub: PF24001**
+- **Adriana Valeria Moreno Zetino - Carnet: MZ21014 - Usuario de GitHub: Mz21014**
+- **José Israel Lemus Salguero - Carnet: LS24009 - Usuario de GitHub: LS24009-LS**
+- **Josue Stanley Ruiz Gaitan - Carnet: RG24040 - Usuario de GitHub: Stanley-rg24040**
+- **Rolando Estuardo Salguero Borja - Carnet: SB21023- Usuario de GitHub: sb21023**
 
 
 
@@ -74,7 +74,7 @@ El sistema está diseñado con **Spring Boot** y sigue la arquitectura en capas,
 ## 📂 Estructura del Proyecto
 
 ```
-vehiculos-renta-api/       - Proyecto principal
+
 │   .gitignore             - Archivos/Carpetas que no se deben subir a Git
 │   pom.xml                - Configuración de Maven y dependencias
 │   README.md              - Documentación del proyecto
