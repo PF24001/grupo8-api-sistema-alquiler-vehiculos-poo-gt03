@@ -122,4 +122,7 @@ El sistema está diseñado con **Spring Boot** y sigue la arquitectura en capas,
    http://localhost:8080
    ```
 
-
+## 📅 Entregas
+- **Entrega 1:** Diagramas UML + ER, Casos de uso, Repo base ✅
+- **Entrega 2:** Implementación parcial de la API (CRUD de 2 entidades + Postman).  
+- **Entrega 3:** Implementación completa con relaciones, pruebas unitarias y documentación final.  
