@@ -1,0 +1,936 @@
+{
+	"info": {
+		"_postman_id": "12345678-1234-1234-1234-123456789abc",
+		"name": "API Sistema Alquiler Vehículos",
+		"description": "Colección completa de pruebas para el API de alquiler de vehículos con casos de éxito y error",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Vehículos",
+			"item": [
+				{
+					"name": "Crear Vehículo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"La respuesta contiene un ID\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.exist;",
+									"    pm.collectionVariables.set(\"vehiculoId\", jsonData.id);",
+									"});",
+									"",
+									"pm.test(\"Los datos del vehículo son correctos\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.placa).to.eql(\"ABC-123\");",
+									"    pm.expect(jsonData.marca).to.eql(\"Toyota\");",
+									"    pm.expect(jsonData.modelo).to.eql(\"Corolla\");",
+									"    pm.expect(jsonData.disponible).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"placa\": \"ABC-123\",\n    \"marca\": \"Toyota\",\n    \"modelo\": \"Corolla\",\n    \"anio\": 2023,\n    \"color\": \"Blanco\",\n    \"precioDiario\": 250.00,\n    \"tipo\": \"SEDAN\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vehiculos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vehiculos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Vehículo - Placa Duplicada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Mensaje de error sobre placa duplicada\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include(\"Ya existe un vehículo con la placa\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"placa\": \"ABC-123\",\n    \"marca\": \"Honda\",\n    \"modelo\": \"Civic\",\n    \"anio\": 2023,\n    \"color\": \"Negro\",\n    \"precioDiario\": 280.00,\n    \"tipo\": \"SEDAN\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vehiculos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vehiculos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Vehículo - Validación Fallida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Contiene errores de validación\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(\"Validation Failed\");",
+									"    pm.expect(jsonData.validationErrors).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"placa\": \"AB\",\n    \"marca\": \"\",\n    \"anio\": 1800,\n    \"precioDiario\": -100\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vehiculos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vehiculos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Todos los Vehículos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"La respuesta es un array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"    pm.expect(jsonData.length).to.be.above(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehiculos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vehiculos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Vehículo por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"El vehículo tiene los campos esperados\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData).to.have.property('placa');",
+									"    pm.expect(jsonData).to.have.property('marca');",
+									"    pm.expect(jsonData).to.have.property('modelo');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehiculos/{{vehiculoId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vehiculos",
+								"{{vehiculoId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Vehículo - ID No Existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Mensaje de error correcto\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(\"Not Found\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehiculos/99999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vehiculos",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Vehículos Disponibles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Todos los vehículos están disponibles\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    jsonData.forEach(function(vehiculo) {",
+									"        pm.expect(vehiculo.disponible).to.be.true;",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehiculos/disponibles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vehiculos",
+								"disponibles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Vehículo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Los datos fueron actualizados\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.color).to.eql(\"Rojo\");",
+									"    pm.expect(jsonData.precioDiario).to.eql(300);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"placa\": \"ABC-123\",\n    \"marca\": \"Toyota\",\n    \"modelo\": \"Corolla\",\n    \"anio\": 2023,\n    \"color\": \"Rojo\",\n    \"precioDiario\": 300.00,\n    \"tipo\": \"SEDAN\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vehiculos/{{vehiculoId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vehiculos",
+								"{{vehiculoId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Vehículo - ID No Existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"placa\": \"XYZ-999\",\n    \"marca\": \"Nissan\",\n    \"modelo\": \"Sentra\",\n    \"anio\": 2023,\n    \"color\": \"Azul\",\n    \"precioDiario\": 280.00,\n    \"tipo\": \"SEDAN\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vehiculos/99999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vehiculos",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservas",
+			"item": [
+				{
+					"name": "Crear Reserva",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"La respuesta contiene un ID\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.exist;",
+									"    pm.collectionVariables.set(\"reservaId\", jsonData.id);",
+									"});",
+									"",
+									"pm.test(\"La reserva tiene costo total calculado\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.costoTotal).to.be.above(0);",
+									"});",
+									"",
+									"pm.test(\"El estado es ACTIVA\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.estado).to.eql(\"ACTIVA\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombreCliente\": \"Juan Pérez\",\n    \"dpiCliente\": \"1234567890123\",\n    \"telefonoCliente\": \"12345678\",\n    \"emailCliente\": \"juan.perez@email.com\",\n    \"fechaInicio\": \"2025-11-10\",\n    \"fechaFin\": \"2025-11-15\",\n    \"vehiculoId\": {{vehiculoId}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Reserva - Vehículo No Disponible",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Mensaje sobre vehículo no disponible\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include(\"no está disponible\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombreCliente\": \"María González\",\n    \"dpiCliente\": \"9876543210987\",\n    \"telefonoCliente\": \"87654321\",\n    \"emailCliente\": \"maria.gonzalez@email.com\",\n    \"fechaInicio\": \"2025-11-16\",\n    \"fechaFin\": \"2025-11-20\",\n    \"vehiculoId\": {{vehiculoId}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Reserva - Validación Fechas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombreCliente\": \"Pedro López\",\n    \"dpiCliente\": \"1112223334445\",\n    \"telefonoCliente\": \"11223344\",\n    \"emailCliente\": \"pedro.lopez@email.com\",\n    \"fechaInicio\": \"2025-11-20\",\n    \"fechaFin\": \"2025-11-10\",\n    \"vehiculoId\": {{vehiculoId}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Reserva - Validación Campos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Contiene errores de validación\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.validationErrors).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombreCliente\": \"AB\",\n    \"dpiCliente\": \"123\",\n    \"emailCliente\": \"email-invalido\",\n    \"fechaInicio\": \"2020-01-01\",\n    \"fechaFin\": \"2020-01-02\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Todas las Reservas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"La respuesta es un array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Reserva por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"La reserva tiene información del vehículo\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.vehiculoPlaca).to.exist;",
+									"    pm.expect(jsonData.vehiculoMarca).to.exist;",
+									"    pm.expect(jsonData.vehiculoModelo).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/{{reservaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"{{reservaId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Reserva - ID No Existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/99999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Reservas por Estado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Todas las reservas tienen el estado solicitado\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    jsonData.forEach(function(reserva) {",
+									"        pm.expect(reserva.estado).to.eql(\"ACTIVA\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/estado/ACTIVA",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"estado",
+								"ACTIVA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Reserva",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Los datos fueron actualizados\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.telefonoCliente).to.eql(\"99887766\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombreCliente\": \"Juan Pérez\",\n    \"dpiCliente\": \"1234567890123\",\n    \"telefonoCliente\": \"99887766\",\n    \"emailCliente\": \"juan.perez@email.com\",\n    \"fechaInicio\": \"2025-11-10\",\n    \"fechaFin\": \"2025-11-15\",\n    \"vehiculoId\": {{vehiculoId}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/{{reservaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"{{reservaId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Completar Reserva",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"El estado cambió a COMPLETADA\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.estado).to.eql(\"COMPLETADA\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/{{reservaId}}/completar",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"{{reservaId}}",
+								"completar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Reserva",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 204 No Content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/{{reservaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"{{reservaId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Reserva - ID No Existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/99999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Eliminar Vehículo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code es 204 No Content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/vehiculos/{{vehiculoId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"vehiculos",
+						"{{vehiculoId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "vehiculoId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "reservaId",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}

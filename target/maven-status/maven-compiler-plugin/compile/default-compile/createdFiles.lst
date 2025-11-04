@@ -1,0 +1,17 @@
+com\proyecto\apirenta\repository\VehiculoRepository.class
+com\proyecto\apirenta\dto\ReservaDTO.class
+com\proyecto\apirenta\dto\VehiculoDTO.class
+com\proyecto\apirenta\exception\BadRequestException.class
+com\proyecto\apirenta\model\Reserva$EstadoReserva.class
+com\proyecto\apirenta\exception\GlobalExceptionHandler.class
+com\proyecto\apirenta\ApiRentaApplication.class
+com\proyecto\apirenta\model\Vehiculo$TipoVehiculo.class
+com\proyecto\apirenta\service\ReservaService.class
+com\proyecto\apirenta\controller\VehiculoController.class
+com\proyecto\apirenta\controller\ReservaController.class
+com\proyecto\apirenta\exception\ErrorResponse.class
+com\proyecto\apirenta\service\VehiculoService.class
+com\proyecto\apirenta\repository\ReservaRepository.class
+com\proyecto\apirenta\model\Reserva.class
+com\proyecto\apirenta\model\Vehiculo.class
+com\proyecto\apirenta\exception\ResourceNotFoundException.class
